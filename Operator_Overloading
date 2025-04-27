@@ -1,0 +1,101 @@
+# Q1. Matrix Addition: Create a Matrix class that supports addition of two matrices using the __add__ method. Ensure that matrices can only be added if they have the same dimensions. 
+#-code--
+class Matrix:
+    def __init__(self, matrix):
+        self.matrix = matrix
+        self.rows = len(matrix)
+        self.cols = len(matrix[0])
+
+    def __add__(self, other):
+        if self.rows != other.rows or self.cols != other.cols:
+            raise ValueError("Matrices must have the same dimensions for addition")
+        
+        result = [[self.matrix[i][j] + other.matrix[i][j] for j in range(self.cols)] for i in range(self.rows)]
+        return Matrix(result)
+
+    def __str__(self):
+        return '\n'.join([' '.join(map(str, row)) for row in self.matrix])
+
+
+matrix1 = Matrix([[1, 2], [3, 4]])
+matrix2 = Matrix([[5, 6], [7, 8]])
+
+matrix_sum = matrix1 + matrix2
+print("Matrix Sum:")
+print(matrix_sum)
+#--output--
+# Matrix Sum:
+# 6 8
+# 10 12
+
+# Q2. Custom String Class: Implement a CustomString class that overloads the + operator for concatenation and the * operator to repeat the string. Include a method to return the string in uppercase. 
+#---code---
+
+class CustomString:
+    def __init__(self, string):
+        self.string = string
+
+    def __add__(self, other):
+        return CustomString(self.string + other.string)
+
+    def __mul__(self, times):
+        return CustomString(self.string * times)
+
+    def to_uppercase(self):
+        return self.string.upper()
+
+    def __str__(self):
+        return self.string
+
+
+str1 = CustomString("Hello ")
+str2 = CustomString("World")
+
+concat_str = str1 + str2
+repeat_str = str1 * 3
+
+print("Concatenated String:", concat_str)
+print("Repeated String:", repeat_str)
+print("Uppercase String:", concat_str.to_uppercase())
+
+#---output---
+# Concatenated String: Hello World
+# Repeated String: Hello Hello Hello 
+# Uppercase String: HELLO WORLD
+
+#Q3. Currency Conversion: Create a Currency class that represents a monetary amount in a specific currency. Overload the + operator to add amounts in the same currency, and implement a method to convert between different currencies.
+# --code---
+class Currency:
+    def __init__(self, amount, currency_type):
+        self.amount = amount
+        self.currency_type = currency_type
+
+    def __add__(self, other):
+        if self.currency_type == other.currency_type:
+            return Currency(self.amount + other.amount, self.currency_type)
+        raise ValueError("Currencies must be the same for addition")
+
+    def convert_to(self, target_currency):
+        exchange_rates = {"USD": 0.85, "EUR": 1.0}  # Simplified rate (USD to EUR)
+        if self.currency_type == "USD" and target_currency == "EUR":
+            return Currency(self.amount * exchange_rates["USD"], target_currency)
+        if self.currency_type == "EUR" and target_currency == "USD":
+            return Currency(self.amount / exchange_rates["USD"], target_currency)
+        return self  # Return same if no conversion needed
+
+    def __str__(self):
+        return f"{self.amount} {self.currency_type}"
+        
+usd1 = Currency(100, "USD")
+usd2 = Currency(50, "USD")
+eur1 = Currency(100, "EUR")
+
+total_usd = usd1 + usd2
+print("Total USD:", total_usd)
+
+converted_to_eur = usd1.convert_to("EUR")
+print("Converted to EUR:", converted_to_eur)
+
+#output--
+# Total USD: 150 USD
+# Converted to EUR: 85.0 EUR
