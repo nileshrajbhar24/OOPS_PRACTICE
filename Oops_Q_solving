@@ -1,0 +1,82 @@
+#Q1.Basic Overriding:
+#Create a base class Animal with a method speak(). Then, create two derived classes, Dog and Cat, that override the speak() method to return "Bark" and "Meow," respectively.
+#---code--
+from abc import ABC ,abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def aSound(self):
+        pass
+
+# a=Animal()
+# a.aSound()
+     
+class Dog(Animal):
+    def aSound(self):
+        return "Dog barks,bow wow!!"
+
+d=Dog()
+print(d.aSound())
+
+class Cat(Animal):
+    def aSound(self):
+        return "Cat meow meow!!"
+c=Cat()
+print(c.aSound())
+
+#---OutPut---
+# Dog barks,bow wow!!
+# Cat meow meow!!
+
+#Q2 # Q2--Overriding with Additional Functionality:
+#Implement a parent class Vehicle with a method fuel_type() that returns "Petrol." Create a subclass ElectricCar that overrides this method to return "Electric."
+#---code--
+class Vehicle:
+    def fuel_type(self):
+        return "Petrol"
+
+class ElectricCar(Vehicle):
+    def fuel_type(self):
+        return "Electric"
+
+
+vehicle = Vehicle()
+electric_Car = ElectricCar()
+
+print(vehicle.fuel_type()) 
+print(electric_Car.fuel_type()) 
+
+#---OutPut---
+# Petrol
+# Electric
+
+# Q3Overriding in a Multi-level Inheritance:
+# Design three classes: Grandparent, Parent, and Child. 
+#Each should have a method show() that prints a different message. 
+#Ensure that the child's method overrides both parent and grandparent methods
+#----code---
+class Grandparent:
+    def show(self):
+        print("I am the Grandparent.")
+
+class Parent(Grandparent):
+    def show(self):
+        print("I am the Parent.")
+
+class Child(Parent):
+    def show(self):
+        print("I am the Child.")
+
+gp = Grandparent()
+p = Parent()
+c = Child()
+
+gp.show() 
+p.show()  
+c.show()
+#----OutPut-----
+# I am the Grandparent.
+# I am the Parent.
+# I am the Child.
+
+
