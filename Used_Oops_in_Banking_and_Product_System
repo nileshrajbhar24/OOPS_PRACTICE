@@ -1,0 +1,169 @@
+# Q2--Lab 2: Product Pricing System (Property Decorators)
+
+class Product:
+    def __init__(self, price):
+        self._price = price
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        if value < 0:
+            print("Price cannot be negative.")
+        else:
+            self._price = value
+
+    @price.deleter
+    def price(self):
+        print("Deleting price...")
+        del self._price
+
+# Example
+p = Product(100)
+print("Price:", p.price)
+
+p.price = 150
+print("Updated Price:", p.price)
+
+p.price = -50
+
+del p.price
+
+
+try:
+    print(p.price)
+except AttributeError as e:
+    print("Cannot access deleted price:", e)
+
+#--OutPut---
+Price: 100
+# Updated Price: 150
+# Price cannot be negative.
+# Deleting price...
+# Cannot access deleted price: 'Product' object has no attribute '_price'
+
+Q1
+#--code---
+class BankAccount:
+    def __init__(self, account_number):
+        self.__balance = 0
+        self.__account_number = account_number
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Deposited {amount} successfully.")
+        else:
+            print("Deposit amount must be positive.")
+
+    def withdraw(self, amount):
+        if amount > self.__balance:
+            print("Insufficient balance.")
+        elif amount <= 0:
+            print("Withdraw amount must be positive.")
+        else:
+            self.__balance -= amount
+            print(f"Withdrew {amount} successfully.")
+
+    def get_balance(self):
+        return self.__balance
+
+    def transfer_money(self, target_account, amount):
+        if amount > self.__balance:
+            print("Transfer failed: Insufficient balance.")
+        elif amount <= 0:
+            print("Transfer amount must be positive.")
+        else:
+            self.__balance -= amount
+            target_account.deposit(amount)
+            print(f"Transferred {amount} successfully.")
+
+# Example Usage:
+account1 = BankAccount(12345)
+account2 = BankAccount(67890)
+
+account1.deposit(500)
+account1.withdraw(200)
+print("Account 1 Balance:", account1.get_balance())
+
+# Trying to access private attribute directly
+try:
+    print(account1.__balance)
+except AttributeError as e:
+    print("Error accessing private attribute:", e)
+
+# Transfer money from account1 to account2
+account1.transfer_money(account2, 100)
+
+print("Account 1 Balance after transfer:", account1.get_balance())
+print("Account 2 Balance after receiving:", account2.get_balance())
+
+
+#Q1--Lab 1: Banking System (Encapsulation and Private Attributes)
+#You are working on a simple banking system.
+
+class BankAccount:
+    def __init__(self, account_number):
+        self.__balance = 0
+        self.__account_number = account_number
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Deposited {amount} successfully.")
+        else:
+            print("Deposit amount must be positive.")
+
+    def withdraw(self, amount):
+        if amount > self.__balance:
+            print("Insufficient balance.")
+        elif amount <= 0:
+            print("Withdraw amount must be positive.")
+        else:
+            self.__balance -= amount
+            print(f"Withdrew {amount} successfully.")
+
+    def get_balance(self):
+        return self.__balance
+
+    def transfer_money(self, target_account, amount):
+        if amount > self.__balance:
+            print("Transfer failed: Insufficient balance.")
+        elif amount <= 0:
+            print("Transfer amount must be positive.")
+        else:
+            self.__balance -= amount
+            target_account.deposit(amount)
+            print(f"Transferred {amount} successfully.")
+
+# Example Usage:
+account1 = BankAccount(12345)
+account2 = BankAccount(67890)
+
+account1.deposit(500)
+account1.withdraw(200)
+print("Account 1 Balance:", account1.get_balance())
+
+# Trying to access private attribute directly
+try:
+    print(account1.__balance)
+except AttributeError as e:
+    print("Error accessing private attribute:", e)
+
+# Transfer money from account1 to account2
+account1.transfer_money(account2, 100)
+
+print("Account 1 Balance after transfer:", account1.get_balance())
+print("Account 2 Balance after receiving:", account2.get_balance())
+
+#---output--
+# Deposited 500 successfully.
+# Withdrew 200 successfully.
+# Account 1 Balance: 300
+# Error accessing private attribute: 'BankAccount' object has no attribute '__balance'
+# Deposited 100 successfully.
+# Transferred 100 successfully.
+# Account 1 Balance after transfer: 200
+# Account 2 Balance after receiving: 100
