@@ -1,0 +1,186 @@
+# Lab1
+class Library:
+    total_books = 0
+    all_books = []
+
+    def __init__(self, name):
+        self.name = name
+        self.borrowed_books = []
+
+    def borrow_book(self, book):
+        if book in Library.all_books:
+            self.borrowed_books.append(book)
+            Library.all_books.remove(book)
+            Library.total_books -= 1
+            print(f"{self.name} has borrowed '{book}'.")
+        else:
+            print("Book not available.")
+
+    def return_book(self, book):
+        if book in self.borrowed_books:
+            self.borrowed_books.remove(book)
+            Library.all_books.append(book)
+            Library.total_books += 1
+            print(f"{self.name} has returned '{book}'.")
+        else:
+            print(f"{self.name} does not have '{book}' to return.")
+
+    @classmethod
+    def view_library_books(cls):
+        print(f"Total books in library: {cls.total_books}")
+        print("Available books:")
+        for book in cls.all_books:
+            print(f"- {book}")
+
+
+
+Library.all_books = ['The Hobbit', 'The Alchemist', 'The Lord of the Rings', '1984']
+Library.total_books = len(Library.all_books)
+
+
+member1 = Library('Hurry')
+Library.view_library_books()
+
+
+member1.borrow_book('The Hobbit')
+Library.view_library_books()
+
+member1.return_book('The Hobbit')
+Library.view_library_books()
+#--------OutPut---------
+# Total books in library: 4
+# Available books:
+# - The Hobbit
+# - The Alchemist
+# - The Lord of the Rings
+# - 1984
+# Hurry has borrowed 'The Hobbit'.
+# Total books in library: 3
+# Available books:
+# - The Alchemist
+# - The Lord of the Rings
+# - 1984
+# Hurry has returned 'The Hobbit'.
+# Total books in library: 4
+# Available books:
+# - The Alchemist
+# - The Lord of the Rings
+# - 1984
+# - The Hobbit
+
+
+#  Lab2
+class MovieLibrary:
+    available_movies = []
+
+    def __init__(self, member_name):
+        self.member_name = member_name
+        self.borrowed_movies = []
+
+    def borrow_movie(self, movie):
+        if movie in MovieLibrary.available_movies:
+            self.borrowed_movies.append(movie)
+            MovieLibrary.available_movies.remove(movie)
+            print(f"{self.member_name} has borrowed '{movie}'.")
+        else:
+            print(f"Movie '{movie}' is not available.")
+
+    def return_movie(self, movie):
+        if movie in self.borrowed_movies:
+            self.borrowed_movies.remove(movie)
+            MovieLibrary.available_movies.append(movie)
+            print(f"{self.member_name} has returned '{movie}'.")
+        else:
+            print(f"{self.member_name} does not have '{movie}' to return.")
+
+    def view_borrowed_movies(self):
+        if self.borrowed_movies:
+            print(f"{self.member_name} has borrowed these movies:")
+            for movie in self.borrowed_movies:
+                print(f"- {movie}")
+        else:
+            print(f"{self.member_name} has not borrowed any movies.")
+
+MovieLibrary.available_movies = ['Avatar','Titanic','Jurassic Park','The Lion King']
+member1 = MovieLibrary('nick')
+
+member1.borrow_movie('Avatar')
+member1.view_borrowed_movies()
+member1.return_movie('Avatar')
+member1.view_borrowed_movies()
+# -------OutPut-------
+# nick has borrowed 'Avatar'.
+# nick has borrowed these movies:
+# - Avatar
+# nick has returned 'Avatar'.
+# nick has not borrowed any movies.
+
+
+#  Lab3
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.marks = {}
+
+    def add_marks(self, subject, mark):
+        self.marks[subject] = mark
+
+    def get_average_marks(self):
+        if self.marks:
+            return sum(self.marks.values()) / len(self.marks)
+        else:
+            return 0
+
+    def display_student_info(self):
+        print(f"Name: {self.name}")
+        print(f"Age: {self.age}")
+        print("Marks:")
+        for subject, mark in self.marks.items():
+            print(f"- {subject}: {mark}")
+        print(f"Average Marks: {self.get_average_marks():.2f}")
+
+student1 = Student('Nick', 20)
+student1.add_marks('Math', 85)
+student1.add_marks('Science', 90)
+student1.add_marks('English', 70)
+student1.display_student_info()
+# ------OutPut------
+# Name: Nick
+# Age: 20
+# Marks:
+# - Math: 85
+# - Science: 90
+# - English: 70
+# Average Marks: 81.67
+
+#  Lab4
+class Employee:
+    def __init__(self, name, salary, position):
+        self.name = name
+        self.salary = salary
+        self.position = position
+
+    def promote(self, new_position):
+        self.position = new_position
+
+    def update_salary(self, new_salary):
+        self.salary = new_salary
+
+    def display_info(self):
+        print(f"Name: {self.name}")
+        print(f"Position: {self.position}")
+        print(f"Salary: ${self.salary}")
+
+employee1 = Employee('John Doe', 50000, 'Software Engineer')
+employee1.display_info()
+employee1.promote('Senior Software Engineer')
+employee1.update_salary(70000)
+employee1.display_info()
+#-------OutPut-------
+# Name: jaam
+# Position: Software Engineer
+# Salary: $60000
+# Name: jaam
+# Position: Senior Software Engineer
+# Salary: $90000
